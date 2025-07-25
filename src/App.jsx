@@ -1,8 +1,19 @@
+week-02-components
+import TodoList from './Todolist'
+import TodoForm from './Todoform'
 
+main
 import './App.css'
 
 function App() {
+   week-02-components
+
   
+  return (
+  <div><h1>My todos</h1>
+    <TodoForm />
+    <TodoList />
+
 const todos = [
     {id: 1, title: "review resources"},
     {id: 2, title: "take notes"},
@@ -17,6 +28,7 @@ const todos = [
       ))}
     </ul>
   
+ main
   </div>
   )
 }
