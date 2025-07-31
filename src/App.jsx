@@ -5,16 +5,30 @@ import { useState } from 'react';
 
 function App() {
   
-const [newTodo, setTodo] = useState("Hello :)")
+const [todoList, setTodoList] = useState([])
+ 
+// Function to handle adding a new todo
 
-  
+function addTodo(title) {
+  const newTodo = {
+    id: Date.now(), 
+    title: title
+  };
+
+  setTodoList([...todoList, newTodo]);
+}
+
+
   return (
   <div><h1>My todos</h1>
-    <TodoForm />
-    <p>{newTodo}</p>
-    <TodoList />
+    <TodoForm onAddTodo={addTodo} />
+    <TodoList todoList={todoList} />
   </div>
   );
 }
 
+
 export default App
+
+  
+
