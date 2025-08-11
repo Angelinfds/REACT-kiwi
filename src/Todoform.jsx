@@ -12,11 +12,14 @@ function TodoForm({ onAddTodo }) {
             inputRef.current.focus();
         }
     }
+    
+
     return ( <>
         <form onSubmit={handleAddTodo}>
             <label htmlFor="todo-input">New Todo:</label>
             <input ref={inputRef} name="title" type="text" id="todo-input" placeholder="Add a new todo" />
             <button type="submit">Add Todo</button>
+            
          </form>
     </>
        
@@ -24,4 +27,3 @@ function TodoForm({ onAddTodo }) {
 }
 
 export default TodoForm
-

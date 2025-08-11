@@ -17,12 +17,13 @@ function addTodo(title) {
 
   setTodoList([...todoList, newTodo]);
 }
+console.log(todoList);
 
 
   return (
   <div><h1>My todos</h1>
     <TodoForm onAddTodo={addTodo} />
-    <TodoList todoList={todoList} />
+    {todoList.length > 0 ? <TodoList todoList={todoList} /> : <p>Add todo above to get started</p>}
   </div>
   );
 }
