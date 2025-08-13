@@ -19,10 +19,26 @@ function addTodo(title) {
 }
 
 
+function completeTodo(id){
+  const updatedTodos = todoList.map(todo => {
+    if (todo.id === id) {
+      return { ...todo, completed: !todo.completed };
+    }
+    return todo;
+  });
+
+  const filteredTodoList = updatedTodos.filter(todo => !todo.completed);
+  setTodoList(filteredTodoList);
+}
+
+
+
   return (
   <div><h1>My todos</h1>
     <TodoForm onAddTodo={addTodo} />
-    <TodoList todoList={todoList} />
+   
+
+    {todoList.length > 0 ? <TodoList todoList={todoList} onCompleteTodo={completeTodo} /> : <p>Add todo above to get started</p>}
   </div>
   );
 }
