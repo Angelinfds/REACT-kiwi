@@ -8,9 +8,8 @@ function TodoForm({ onAddTodo }) {
 
     function handleAddTodo(event) {
         event.preventDefault();
-        const title = event.target.title.value.trim();
+        const title = workingTodoTitle.trim();
         onAddTodo(title); 
-        event.target.title.value = ""; 
         if (inputRef.current) {
             inputRef.current.focus();
         }
