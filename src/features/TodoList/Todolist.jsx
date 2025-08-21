@@ -1,11 +1,11 @@
 import TodoListItem from './TodoListItem.jsx';
 
 // extract from TodoList.jsx
-function TodoList({ todoList, onCompleteTodo }) {
+function TodoList({ todoList, onCompleteTodo, onUpdateTodo }) {
     return (
         <ul>
             {todoList.map(todo => (
-                <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} />
+                <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo} />
             ))}
         </ul>
     );
