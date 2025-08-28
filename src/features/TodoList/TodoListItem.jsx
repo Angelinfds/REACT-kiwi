@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [workingTitle, setWorkingTitle] = useState(todo.title);
+  const [workingTitle, setWorkingTitle] = useState(todo.title || '');
+
+  useEffect(() => {
+    setWorkingTitle(todo.title || '');
+  }, [todo]);
 
   function handleCancel() {
-    setWorkingTitle(todo.title);
+    setWorkingTitle(todo.title || '');
     setIsEditing(false);
   }
   function handleEdit(event) {
@@ -18,7 +22,13 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
       return;
     }
     event.preventDefault();
-    onUpdateTodo({ id: todo.id, title: workingTitle });
+    const trimmedTitle = workingTitle.trim();
+    if (trimmedTitle === '') {
+      setWorkingTitle(todo.title || '');
+      setIsEditing(false);
+      return;
+    }
+    onUpdateTodo({ id: todo.id, title: trimmedTitle });
     setIsEditing(false);
   }
   return (
@@ -45,7 +55,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 onChange={() => onCompleteTodo(todo.id)}
               />
             </label>
-            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+            <span onClick={() => setIsEditing(true)}>{todo.title || 'Untitled todo'}</span>
           </>
         )}
       </form>
