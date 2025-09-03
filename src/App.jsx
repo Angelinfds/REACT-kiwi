@@ -2,6 +2,8 @@ import TodoList from "./features/TodoList/Todolist.jsx";
 import TodoForm from "./features/Todoform.jsx";
 import "./App.css";
 import { useState, useEffect } from "react";
+import TodosViewForm from "./features/TodosViewForm.jsx";
+
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -231,6 +233,8 @@ function App() {
       ) : (
         <p>Add todo above to get started</p>
       )}
+
+      <TodosViewForm/> 
 
       {errorMessage && (
         <div>
