@@ -1,5 +1,36 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const StyledGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const StyledLabel = styled.label`
+  font-weight: bold;
+`;
+
+const StyledInput = styled.input`
+  padding: 0.25rem 0.5rem;
+`;
+
+const StyledSelect = styled.select`
+  padding: 0.25rem 0.5rem;
+`;
+
+const StyledButton = styled.button`
+  padding: 0.25rem 0.5rem;
+  &:disabled {
+    font-style: italic;
+  }
+`;
 
 const TodosViewForm = ({
   sortField,
@@ -7,18 +38,15 @@ const TodosViewForm = ({
   sortDirection,
   setSortDirection,
   queryString,
-  setQueryString
+  setQueryString,
 }) => {
-   const [localQueryString, setLocalQueryString] = useState(queryString);
-
+  const [localQueryString, setLocalQueryString] = useState(queryString);
 
   useEffect(() => {
-   
     const debounce = setTimeout(() => {
       setQueryString(localQueryString);
-    }, 500);  
+    }, 500);
 
-    
     return () => {
       clearTimeout(debounce);
     };
@@ -27,45 +55,43 @@ const TodosViewForm = ({
   function preventRefresh(event) {
     event.preventDefault();
   }
+
   return (
-    <form onSubmit={preventRefresh}>
-        <div>
-        <label>Search Todos</label>
-        <input
+    <StyledForm onSubmit={preventRefresh}>
+      <StyledGroup>
+        <StyledLabel>Search Todos</StyledLabel>
+        <StyledInput
           type="text"
           value={localQueryString}
           onChange={(e) => setLocalQueryString(e.target.value)}
         />
-
-        <button type="button" onClick={() => setLocalQueryString("")}>
+        <StyledButton type="button" onClick={() => setLocalQueryString("")}>
           Clear
-        </button>
-        </div>
+        </StyledButton>
+      </StyledGroup>
 
-      <div>
-        <label htmlFor="time">Sort by</label>
-        <select
+      <StyledGroup>
+        <StyledLabel htmlFor="time">Sort by</StyledLabel>
+        <StyledSelect
           id="time"
           onChange={(e) => setSortField(e.target.value)}
           value={sortField}
         >
           <option value="title">Title</option>
-          <option value="createdTime">
-            Time added
-          </option>
-        </select>
+          <option value="createdTime">Time added</option>
+        </StyledSelect>
 
-        <label htmlFor="direction">Direction</label>
-        <select
+        <StyledLabel htmlFor="direction">Direction</StyledLabel>
+        <StyledSelect
           id="direction"
           onChange={(e) => setSortDirection(e.target.value)}
           value={sortDirection}
         >
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
-        </select>
-      </div>
-    </form>
+        </StyledSelect>
+      </StyledGroup>
+    </StyledForm>
   );
 };
 
