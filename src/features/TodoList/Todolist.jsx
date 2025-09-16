@@ -1,9 +1,10 @@
 import TodoListItem from './TodoListItem.jsx';
+import styles from './TodoList.module.css';
 
 // extract from TodoList.jsx
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
     return (
-        <ul>
+        <ul className={styles.list}>
             {isLoading ? (
                 <p>Todo list loading...</p>
             ) : (
