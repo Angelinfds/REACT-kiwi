@@ -1,24 +1,41 @@
-import TodoList from "./features/TodoList/Todolist.jsx";
-import TodoForm from "./features/Todoform.jsx";
+
 import "./App.css";
-import { useState, useEffect, useCallback, useReducer } from "react";
-import TodosViewForm from "./features/TodosViewForm.jsx";
+import { useState, useEffect, useCallback, useReducer, use } from "react";
 import styles from "./app.module.css";
 import {
   reducer as todosReducer,
   actions as todoActions,
   initialState as initialTodosState,
 } from './reducers/todos.reducer';
+import TodosPages from "./pages/TodosPages";
+import HeaderComponent from "./shared/HeaderComponent";
+import { useLocation } from "react-router"; 
 
 const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${
   import.meta.env.VITE_TABLE_NAME
 }`;
+
+
 
 function App() {
   const [todoState, dispatch] = useReducer(todosReducer, initialTodosState);
   const [sortField, setSortField] = useState("createdTime");
   const [sortDirection, setSortDirection] = useState("asc");
   const [queryString, setQueryString] = useState("");
+  const [title, setTitle] = useState();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setTitle("My Todo App");
+    } else if (location.pathname === "/about") {
+      setTitle("About This App");
+    } else {
+      setTitle("Page Not Found");
+    }
+    
+  }, [location]);
+  
 
   const encodeUrl = useCallback(({ sortField, sortDirection, queryString }) => {
     let sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
@@ -185,40 +202,22 @@ function App() {
 
   return (
     <div className={styles.center}>
-      <h1>My todos</h1>
-      <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
-
-      {todoState.isLoading ? (
-        <p>Loading todos...</p>
-      ) : todoState.errorMessage ? (
-        <p className={styles.errorMessage}>Error: {todoState.errorMessage}</p>
-      ) : todoState.todoList.length > 0 ? (
-        <TodoList
-          todoList={todoState.todoList}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-          isLoading={todoState.isLoading}
-        />
-      ) : (
-        <p>Add todo above to get started</p>
-      )}
-
-      <TodosViewForm
+      <HeaderComponent title={title} />
+      <TodosPages
+        addTodo={addTodo}
+        todoState={todoState}
+        completeTodo={completeTodo}
+        updateTodo={updateTodo}
         sortDirection={sortDirection}
         setSortDirection={setSortDirection}
         sortField={sortField}
         setSortField={setSortField}
         queryString={queryString}
         setQueryString={setQueryString}
+        dispatch={dispatch}
+        todoActions={todoActions}
+        styles={styles}
       />
-
-      {todoState.errorMessage && (
-        <div className={styles.errorMessage}>
-          <hr />
-          <p>{todoState.errorMessage}</p>
-          <button onClick={() => dispatch({ type: todoActions.clearError })}>Dismiss</button>
-        </div>
-      )}
     </div>
   );
 }
