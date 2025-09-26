@@ -9,7 +9,7 @@ import {
 } from './reducers/todos.reducer';
 import TodosPages from "./pages/TodosPages";
 import HeaderComponent from "./shared/HeaderComponent";
-import { useLocation } from "react-router"; 
+import { useLocation, Routes, Route } from "react-router"; 
 
 const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${
   import.meta.env.VITE_TABLE_NAME
@@ -203,21 +203,25 @@ function App() {
   return (
     <div className={styles.center}>
       <HeaderComponent title={title} />
-      <TodosPages
-        addTodo={addTodo}
-        todoState={todoState}
-        completeTodo={completeTodo}
-        updateTodo={updateTodo}
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        sortField={sortField}
-        setSortField={setSortField}
-        queryString={queryString}
-        setQueryString={setQueryString}
-        dispatch={dispatch}
-        todoActions={todoActions}
-        styles={styles}
-      />
+      <Routes>
+        <Route path="/" element={<TodosPages
+          addTodo={addTodo}
+          todoState={todoState}
+          completeTodo={completeTodo}
+          updateTodo={updateTodo}
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
+          sortField={sortField}
+          setSortField={setSortField}
+          queryString={queryString}
+          setQueryString={setQueryString}
+          dispatch={dispatch}
+          todoActions={todoActions}
+          styles={styles}
+        />} />
+        <Route path="/about" element={<h1>About</h1>} />
+        <Route path="/*" element={<h1>Not Found</h1>} />
+      </Routes>
     </div>
   );
 }
