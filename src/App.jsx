@@ -9,6 +9,8 @@ import {
 } from './reducers/todos.reducer';
 import TodosPages from "./pages/TodosPages";
 import HeaderComponent from "./shared/HeaderComponent";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 import { useLocation, Routes, Route } from "react-router"; 
 
 const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${
@@ -219,8 +221,8 @@ function App() {
           todoActions={todoActions}
           styles={styles}
         />} />
-        <Route path="/about" element={<h1>About</h1>} />
-        <Route path="/*" element={<h1>Not Found</h1>} />
+        <Route path="/about" element={<About />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>
   );
